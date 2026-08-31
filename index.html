@@ -1,0 +1,784 @@
+<title>Gandhi, Kahan Se?</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ---------- tokens ---------- */
+  :root{
+    --paper: #DEE1D9;
+    --paper-raised: #E9EBE4;
+    --ink: #1B2430;
+    --ink-soft: #4A5260;
+    --rule: rgba(27,36,48,0.16);
+    --gold: #93701F;
+    --gold-strong: #7A5A16;
+    --thread-parsi: #23406B;
+    --thread-parsi-soft: rgba(35,64,107,0.10);
+    --thread-nehru: #52412F;
+    --thread-nehru-soft: rgba(82,65,47,0.10);
+    --thread-italy: #3E6B5C;
+    --thread-italy-soft: rgba(62,107,92,0.10);
+    --stamp-red: #8C2F2F;
+    --stamp-green: #2E5C3E;
+    --stamp-neutral: #3A4A63;
+    --shadow: 0 1px 0 rgba(27,36,48,0.06), 0 8px 20px -12px rgba(27,36,48,0.35);
+    --focus: #93701F;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #12161C;
+      --paper-raised: #1A1F27;
+      --ink: #E7E3D6;
+      --ink-soft: #ABA79A;
+      --rule: rgba(231,227,214,0.14);
+      --gold: #D2A94A;
+      --gold-strong: #E4BE63;
+      --thread-parsi: #7FA0CC;
+      --thread-parsi-soft: rgba(127,160,204,0.12);
+      --thread-nehru: #C6A67B;
+      --thread-nehru-soft: rgba(198,166,123,0.12);
+      --thread-italy: #86C0AA;
+      --thread-italy-soft: rgba(134,192,170,0.12);
+      --stamp-red: #D9776C;
+      --stamp-green: #7FBE93;
+      --stamp-neutral: #9BB1D6;
+      --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 10px 26px -14px rgba(0,0,0,0.7);
+      --focus: #D2A94A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #12161C;
+    --paper-raised: #1A1F27;
+    --ink: #E7E3D6;
+    --ink-soft: #ABA79A;
+    --rule: rgba(231,227,214,0.14);
+    --gold: #D2A94A;
+    --gold-strong: #E4BE63;
+    --thread-parsi: #7FA0CC;
+    --thread-parsi-soft: rgba(127,160,204,0.12);
+    --thread-nehru: #C6A67B;
+    --thread-nehru-soft: rgba(198,166,123,0.12);
+    --thread-italy: #86C0AA;
+    --thread-italy-soft: rgba(134,192,170,0.12);
+    --stamp-red: #D9776C;
+    --stamp-green: #7FBE93;
+    --stamp-neutral: #9BB1D6;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 10px 26px -14px rgba(0,0,0,0.7);
+    --focus: #D2A94A;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Public Sans", ui-sans-serif, system-ui, sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--thread-parsi);}
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--focus);
+    outline-offset:3px;
+  }
+
+  h1,h2,h3{
+    font-family:"Fraunces", Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+  }
+
+  .eyebrow{
+    font-family:"Courier Prime", ui-monospace, monospace;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+  }
+
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:0 1.5rem;
+  }
+
+  /* ---------- person avatars ---------- */
+  /* Wrap any mention of a full name in <span class="person" data-init="XY">.
+     The badge scales with the surrounding text size automatically (em units),
+     so the same markup works in a big card title or a small inline mention. */
+  .person{
+    position:relative;
+    display:inline-block;
+    margin-right:0.95em;
+    --p-color: var(--ink-soft);
+  }
+  .person::after{
+    content:attr(data-init);
+    position:absolute;
+    top:-0.55em;
+    right:-1em;
+    width:1.75em;
+    height:1.75em;
+    border-radius:50%;
+    background:var(--paper-raised);
+    border:1.5px solid var(--p-color);
+    color:var(--p-color);
+    font-family:"Courier Prime", ui-monospace, monospace;
+    font-size:0.32em;
+    font-weight:700;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:var(--shadow);
+    transform:scale(0.35) rotate(-16deg);
+    opacity:0;
+    transition:transform 0.55s cubic-bezier(.22,1.6,.4,1), opacity 0.35s ease;
+    transition-delay:0.2s;
+    z-index:3;
+    pointer-events:none;
+  }
+  .in-view .person::after{
+    transform:scale(1) rotate(0deg);
+    opacity:1;
+  }
+  .person:hover::after{ transform:scale(1.14) rotate(-5deg); }
+  @media (prefers-reduced-motion: reduce){
+    .person::after{ transition:none; opacity:1; transform:scale(1) rotate(0deg); }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:6rem 0 5rem;
+    border-bottom:1px solid var(--rule);
+    overflow:hidden;
+  }
+  .hero .eyebrow{ margin-bottom:1.1rem; }
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 4.6rem);
+    line-height:1.02;
+    font-weight:700;
+  }
+  .hero .hindi{
+    display:block;
+    font-weight:500;
+    font-size:0.5em;
+    color:var(--ink-soft);
+    margin-top:0.3em;
+    letter-spacing:0.01em;
+  }
+  .hero p{
+    max-width:38rem;
+    font-size:1.08rem;
+    color:var(--ink-soft);
+    margin-top:1.6rem;
+  }
+  .hero .cue{
+    margin-top:2.6rem;
+    font-family:"Courier Prime", monospace;
+    font-size:0.85rem;
+    color:var(--gold-strong);
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+  .cue-arrow{ animation:bob 1.6s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(5px);} }
+
+  @keyframes stampIn{
+    from{ opacity:0; transform:translateY(16px) scale(0.98); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .hero .eyebrow{ animation:fadeUp 0.7s ease both; }
+  .hero h1{ animation:stampIn 0.85s cubic-bezier(.22,1.4,.4,1) both; animation-delay:0.1s; }
+  .hero p{ animation:fadeUp 0.8s ease both; animation-delay:0.4s; }
+  .hero .cue{ animation:fadeUp 0.8s ease both; animation-delay:0.65s; }
+  @media (prefers-reduced-motion: reduce){
+    .cue-arrow{ animation:none; }
+    .hero .eyebrow, .hero h1, .hero p, .hero .cue{ animation:none; opacity:1; }
+  }
+
+  /* ---------- timeline / spine ---------- */
+  main{ position:relative; }
+  .entry{
+    position:relative;
+    padding:3.6rem 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .entry::before{
+    content:"";
+    position:absolute;
+    left:calc(1.5rem + 1px);
+    top:0; bottom:0;
+    width:2px;
+    background:var(--thread, var(--thread-parsi));
+    opacity:0.55;
+    transform-origin:top;
+    transform:scaleY(0);
+    transition:transform 0.9s cubic-bezier(.3,.7,.2,1);
+  }
+  .entry.in-view::before{ transform:scaleY(1); }
+  @media (min-width:640px){
+    .entry::before{ left:2rem; }
+  }
+  .entry[data-thread="nehru"]{ --thread:var(--thread-nehru); }
+  .entry[data-thread="italy"]{ --thread:var(--thread-italy); }
+  .entry[data-thread="parsi"]{ --thread:var(--thread-parsi); }
+
+  .node-dot{
+    position:absolute;
+    left:calc(1.5rem - 5px);
+    top:3.9rem;
+    width:12px; height:12px;
+    border-radius:50%;
+    background:var(--thread, var(--thread-parsi));
+    box-shadow:0 0 0 4px var(--paper);
+    transform:scale(0);
+    transition:transform 0.45s cubic-bezier(.22,1.7,.4,1);
+    transition-delay:0.1s;
+  }
+  .entry.in-view .node-dot{ transform:scale(1); }
+  @media (min-width:640px){ .node-dot{ left:calc(2rem - 5px); } }
+  @media (prefers-reduced-motion: reduce){
+    .entry::before, .node-dot{ transition:none; transform:none; }
+  }
+
+  .card{
+    margin-left:2.6rem;
+    background:var(--paper-raised);
+    border:1px solid var(--rule);
+    border-radius:2px;
+    box-shadow:var(--shadow);
+    padding:1.6rem 1.7rem;
+    max-width:640px;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  @media (min-width:640px){ .card{ margin-left:3.4rem; } }
+  .entry.in-view .card{ opacity:1; transform:translateY(0); }
+
+  .card > *{
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .entry.in-view .card > *{ opacity:1; transform:translateY(0); }
+  .card > *:nth-child(1){ transition-delay:0.12s; }
+  .card > *:nth-child(2){ transition-delay:0.19s; }
+  .card > *:nth-child(3){ transition-delay:0.26s; }
+  .card > *:nth-child(4){ transition-delay:0.33s; }
+  .card > *:nth-child(5){ transition-delay:0.4s; }
+  .card > *:nth-child(6){ transition-delay:0.47s; }
+
+  @media (prefers-reduced-motion: reduce){
+    .card, .card > *{ transition:none; opacity:1; transform:none; }
+  }
+
+  .card + .card{ margin-top:1rem; }
+  .card.secondary{ background:transparent; box-shadow:none; border-style:dashed; }
+
+  .name{
+    font-family:"Fraunces", serif;
+    font-size:1.5rem;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .dates{
+    font-family:"Courier Prime", monospace;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-soft);
+    font-size:0.85rem;
+    margin-top:0.15rem;
+  }
+  .role{
+    color:var(--ink-soft);
+    margin-top:0.6rem;
+    font-size:0.98rem;
+  }
+  .role strong{ color:var(--ink); font-weight:600; }
+
+  .flag{
+    font-family:"Courier Prime", monospace;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--thread, var(--thread-italy));
+    margin-bottom:0.5rem;
+    display:block;
+  }
+
+  /* ---------- buttons ---------- */
+  .stamp-btn{
+    font-family:"Courier Prime", monospace;
+    font-size:0.82rem;
+    letter-spacing:0.04em;
+    background:transparent;
+    color:var(--gold-strong);
+    border:1px solid var(--gold-strong);
+    padding:0.55rem 1rem;
+    border-radius:2px;
+    cursor:pointer;
+    margin-top:1.1rem;
+    transition:background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .stamp-btn:hover{ background:var(--gold-strong); color:var(--paper); transform:translateY(-1px); }
+  .stamp-btn:active{ transform:translateY(0); }
+  .stamp-btn[aria-expanded="true"]{ display:none; }
+
+  /* ---------- reveal panels ---------- */
+  .reveal{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows 0.5s ease;
+  }
+  .reveal.open{ grid-template-rows:1fr; margin-top:1rem; }
+  .reveal-inner{ overflow:hidden; }
+  .reveal-body{
+    padding-top:0.9rem;
+    border-top:1px dashed var(--rule);
+  }
+
+  .morph{
+    font-family:"Fraunces", serif;
+    font-weight:700;
+    font-size:2rem;
+    letter-spacing:0.03em;
+    position:relative;
+    display:inline-grid;
+  }
+  .morph span{ grid-area:1/1; transition:opacity 0.6s ease; }
+  .morph .after{ opacity:0; color:var(--gold-strong); }
+  .reveal.open .morph .before{ opacity:0; }
+  .reveal.open .morph .after{ opacity:1; }
+
+  .fine{
+    font-size:0.92rem;
+    color:var(--ink-soft);
+    margin-top:0.7rem;
+  }
+
+  ul.plain{ margin:0.6rem 0 0; padding-left:1.1rem; }
+  ul.plain li{ margin:0.3rem 0; }
+
+  .siblings{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.4rem 0.6rem;
+    margin-top:0.8rem;
+    font-size:0.86rem;
+    color:var(--ink-soft);
+  }
+  .siblings span{
+    border:1px solid var(--rule);
+    padding:0.15rem 0.55rem;
+    border-radius:999px;
+  }
+
+  /* ---------- stamp verdicts ---------- */
+  .verdict{
+    display:flex;
+    align-items:flex-start;
+    gap:1.1rem;
+    flex-wrap:wrap;
+  }
+  .stamp{
+    flex:0 0 auto;
+    font-family:"Courier Prime", monospace;
+    font-weight:700;
+    font-size:0.72rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    text-align:center;
+    width:108px; height:108px;
+    border-radius:50%;
+    border:3px solid var(--stamp-color, var(--stamp-red));
+    color:var(--stamp-color, var(--stamp-red));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:rotate(-9deg) scale(0.5);
+    opacity:0;
+    transition:transform 0.45s cubic-bezier(.2,1.6,.4,1), opacity 0.3s ease;
+    padding:0.5rem;
+    position:relative;
+  }
+  .stamp::after{
+    content:"";
+    position:absolute;
+    inset:6px;
+    border:1px solid var(--stamp-color, var(--stamp-red));
+    border-radius:50%;
+  }
+  .reveal.open .stamp{ transform:rotate(-9deg) scale(1); opacity:0.92; }
+  @media (prefers-reduced-motion: reduce){
+    .stamp{ transition:none; }
+  }
+  .stamp.stamp-green{ --stamp-color:var(--stamp-green); }
+  .stamp.stamp-neutral{ --stamp-color:var(--stamp-neutral); }
+
+  .verdict-text{ flex:1 1 220px; min-width:0; }
+  .verdict-text .claim{
+    font-style:italic;
+    color:var(--ink-soft);
+    margin:0 0 0.6rem;
+  }
+
+  /* ---------- explainer box ---------- */
+  .explainer{
+    background:var(--thread-italy-soft);
+    border:1px solid var(--rule);
+    border-radius:2px;
+    padding:1.5rem 1.6rem;
+    margin-left:2.6rem;
+    max-width:640px;
+  }
+  @media (min-width:640px){ .explainer{ margin-left:3.4rem; } }
+  .contrast{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1rem;
+    margin-top:1.1rem;
+  }
+  @media (min-width:520px){ .contrast{ grid-template-columns:1fr 1fr; } }
+  .contrast > div{
+    border:1px dashed var(--rule);
+    padding:0.9rem 1rem 1rem;
+    border-radius:2px;
+    font-size:0.92rem;
+  }
+  .contrast .who{ font-family:"Courier Prime", monospace; font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:0.3rem; }
+
+  /* ---------- finale ---------- */
+  .finale{
+    padding:5rem 0 4rem;
+    text-align:center;
+  }
+  .finale h2{
+    font-size:clamp(1.8rem, 5vw, 2.6rem);
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .finale.in-view h2{ opacity:1; transform:translateY(0); }
+  .stamp-row{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:1.4rem 1.1rem;
+    margin:2.6rem 0 2rem;
+  }
+  .stamp-item{ width:150px; }
+  .stamp-item .stamp{
+    width:96px; height:96px;
+    margin:0 auto;
+    font-size:0.66rem;
+  }
+  .finale.in-view .stamp-item:nth-child(1) .stamp{ transition-delay:.05s; }
+  .finale.in-view .stamp-item:nth-child(2) .stamp{ transition-delay:.2s; }
+  .finale.in-view .stamp-item:nth-child(3) .stamp{ transition-delay:.35s; }
+  .finale.in-view .stamp-item:nth-child(4) .stamp{ transition-delay:.5s; }
+  .finale.in-view .stamp-item:nth-child(5) .stamp{ transition-delay:.65s; }
+  .finale.in-view .stamp{ transform:rotate(-9deg) scale(1); opacity:0.92; }
+  .stamp-item p{
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    margin:0.7rem 0 0;
+    opacity:0;
+    transition:opacity .5s ease;
+    transition-delay:.5s;
+  }
+  .finale.in-view .stamp-item p{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){
+    .finale h2, .finale .stamp, .stamp-item p{ transition:none; opacity:1; transform:none; }
+  }
+  .tagline{
+    font-family:"Fraunces", serif;
+    font-size:clamp(1.3rem, 3.4vw, 1.7rem);
+    margin-top:1.4rem;
+    opacity:0;
+    transition:opacity .6s ease .8s;
+  }
+  .finale.in-view .tagline{ opacity:1; }
+  .tagline-sub{
+    color:var(--ink-soft);
+    max-width:34rem;
+    margin:0.8rem auto 0;
+    font-size:0.98rem;
+    opacity:0;
+    transition:opacity .6s ease .95s;
+  }
+  .finale.in-view .tagline-sub{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){
+    .tagline, .tagline-sub{ transition:none; opacity:1; }
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--rule);
+    padding:3rem 0 4rem;
+    font-size:0.86rem;
+    color:var(--ink-soft);
+  }
+  footer h3{
+    font-size:0.78rem;
+    font-family:"Courier Prime", monospace;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:0.9rem;
+  }
+  footer ol{ padding-left:1.2rem; margin:0 0 1.6rem; }
+  footer li{ margin:0.4rem 0; }
+  footer .note{
+    border-top:1px dashed var(--rule);
+    padding-top:1.1rem;
+    font-size:0.84rem;
+  }
+</style>
+
+<div class="hero wrap">
+  <span class="eyebrow">Case file — surname inquiry</span>
+  <h1>Gandhi, kahan se?<span class="hindi">(Gandhi — but from where?)</span></h1>
+  <p>Four generations. Three countries. One surname — inherited, adopted, and married into along the way. This is a documented family tree, not a claim that anyone's name is fake. Circular marks next to a name are quick reference initials, colour-coded by family branch.</p>
+  <div class="cue">Open the file <span class="cue-arrow">↓</span></div>
+</div>
+
+<main>
+
+  <section class="entry" data-thread="parsi">
+    <span class="node-dot"></span>
+    <div class="wrap">
+      <div class="card">
+        <span class="flag">The starting point</span>
+        <div class="name"><span class="person" data-init="RaG" style="--p-color:var(--gold-strong)">Rahul Gandhi</span></div>
+        <div class="dates">b. 1970</div>
+        <p class="role">Member of Parliament. Son of <strong><span class="person" data-init="RjG" style="--p-color:var(--thread-parsi)">Rajiv Gandhi</span></strong> and <strong><span class="person" data-init="SoG" style="--p-color:var(--thread-italy)">Sonia Gandhi</span></strong>. His surname comes from his father's side — let's follow it back.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry" data-thread="parsi">
+    <span class="node-dot"></span>
+    <div class="wrap">
+      <div class="card">
+        <span class="flag">Father</span>
+        <div class="name"><span class="person" data-init="RjG" style="--p-color:var(--thread-parsi)">Rajiv Gandhi</span></div>
+        <div class="dates">1944 – 1991</div>
+        <p class="role">Prime Minister of India, 1984–89. Elder son of <strong><span class="person" data-init="FeG" style="--p-color:var(--thread-parsi)">Feroze Gandhi</span></strong> and <strong><span class="person" data-init="InG" style="--p-color:var(--thread-nehru)">Indira Gandhi</span></strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry" data-thread="parsi">
+    <span class="node-dot"></span>
+    <div class="wrap">
+      <div class="card">
+        <span class="flag">Paternal grandfather — the pivot</span>
+        <div class="name"><span class="person" data-init="FeG" style="--p-color:var(--thread-parsi)">Feroze Gandhi</span></div>
+        <div class="dates">1912 – 1960</div>
+        <p class="role">Journalist and Member of Parliament. Married <strong><span class="person" data-init="InG" style="--p-color:var(--thread-nehru)">Indira Nehru</span></strong> in 1942.</p>
+
+        <button class="stamp-btn" data-target="rev-birth" aria-expanded="false">See his birth record →</button>
+        <div class="reveal" id="rev-birth">
+          <div class="reveal-inner"><div class="reveal-body">
+            <div class="morph">
+              <span class="before">GHANDY</span>
+              <span class="after">GANDHI</span>
+            </div>
+            <p class="fine">Born <strong>Feroze Jehangir Ghandy</strong>, 12 September 1912, in Bombay. Biographies generally use the <em>Ghandy</em> spelling for his birth and early life, and the <em>Gandhi</em> spelling from his adult and political life onward. Historians differ on exactly why the spelling shifted — some link it to his closeness with the freedom movement, others describe it simply as a family variant already in use. No source claims the two spellings refer to different people.</p>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="card secondary">
+        <span class="flag">His parents</span>
+        <div class="name" style="font-size:1.15rem"><span class="person" data-init="JFG" style="--p-color:var(--ink-soft)">Jehangir Faredoon Ghandy</span> &amp; <span class="person" data-init="RaC" style="--p-color:var(--ink-soft)">Ratimai Commissariat</span></div>
+        <p class="role">A <strong>Parsi (Zoroastrian)</strong> family from Bombay. Jehangir was a marine engineer. Feroze was the youngest of five children.</p>
+        <div class="siblings">
+          <span>Dorab</span><span>Faridun</span><span>Tehmina</span><span>Aloo</span><span>Feroze (youngest)</span>
+        </div>
+      </div>
+
+      <div class="card secondary">
+        <button class="stamp-btn" data-target="rev-khan" aria-expanded="false">Wasn't Feroze secretly Muslim? →</button>
+        <div class="reveal" id="rev-khan">
+          <div class="reveal-inner"><div class="reveal-body">
+            <div class="verdict">
+              <div class="stamp">No evidence found</div>
+              <div class="verdict-text">
+                <p class="claim">The claim: a viral story — repeated by some politicians — holds that Feroze's "real" surname was Khan, and that he was secretly Muslim.</p>
+                <ul class="plain">
+                  <li>His documented parents are Jehangir Faredoon Ghandy and Ratimai Commissariat — both Parsi family names.</li>
+                  <li>He married Indira Nehru in 1942 in a Hindu ceremony.</li>
+                  <li>On his death in 1960 he was cremated, and his ashes interred at the Parsi cemetery in Allahabad — a Zoroastrian practice, not an Islamic one.</li>
+                </ul>
+                <p class="fine">Multiple independent fact-checks have examined and rejected the "Khan" claim. It appears to be a political rumor, not a documented fact.</p>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="card secondary">
+        <button class="stamp-btn" data-target="rev-mahatma" aria-expanded="false">So — related to Mahatma Gandhi? →</button>
+        <div class="reveal" id="rev-mahatma">
+          <div class="reveal-inner"><div class="reveal-body">
+            <div class="verdict">
+              <div class="stamp stamp-neutral">No blood relation</div>
+              <div class="verdict-text">
+                <p class="fine">Gandhi is a common surname in Gujarat, and this family is not related to Mohandas K. (<span class="person" data-init="MKG" style="--p-color:var(--stamp-neutral)">Mahatma Gandhi</span>) by blood. Feroze is widely reported to have adopted the spelling in admiration of him during the independence struggle, though accounts of the exact story vary.</p>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry" data-thread="nehru">
+    <span class="node-dot"></span>
+    <div class="wrap">
+      <div class="card">
+        <span class="flag">Paternal grandmother</span>
+        <div class="name"><span class="person" data-init="InG" style="--p-color:var(--thread-nehru)">Indira Gandhi</span> <span style="font-weight:400;color:var(--ink-soft);font-size:0.7em;">(née Nehru)</span></div>
+        <div class="dates">1917 – 1984</div>
+        <p class="role">Prime Minister of India. Daughter of <strong><span class="person" data-init="JwN" style="--p-color:var(--thread-nehru)">Jawaharlal Nehru</span></strong> and <strong><span class="person" data-init="KaN" style="--p-color:var(--ink-soft)">Kamala Nehru</span></strong>. Took the Gandhi surname on marrying Feroze in 1942, and kept it for the rest of her life and career.</p>
+      </div>
+      <div class="card secondary">
+        <span class="flag">Her side, one generation further</span>
+        <p class="role"><strong><span class="person" data-init="JwN" style="--p-color:var(--thread-nehru)">Jawaharlal Nehru</span></strong> (1889–1964), independent India's first Prime Minister, was the son of <strong><span class="person" data-init="MoN" style="--p-color:var(--ink-soft)">Motilal Nehru</span></strong> and <strong><span class="person" data-init="SwN" style="--p-color:var(--ink-soft)">Swarup Rani Nehru</span></strong> of Allahabad.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry" data-thread="italy">
+    <span class="node-dot"></span>
+    <div class="wrap">
+      <div class="card">
+        <span class="flag">🇮🇹 Meanwhile, in Italy</span>
+        <div class="name"><span class="person" data-init="SoG" style="--p-color:var(--thread-italy)">Sonia Gandhi</span></div>
+        <div class="dates">b. 1946</div>
+        <p class="role">Born <strong><span class="person" data-init="AEM" style="--p-color:var(--ink-soft)">Antonia Edvige Albina Maino</span></strong> in northern Italy (sources vary on the order of her given names). Known growing up as <strong>Sonia Maino</strong>.</p>
+        <p class="fine">She met <strong><span class="person" data-init="RjG" style="--p-color:var(--thread-parsi)">Rajiv Gandhi</span></strong> in the late 1960s while he was a student in Cambridge, England. They married in New Delhi in 1968, and she took the name Sonia Gandhi. Separately, a widely circulated claim about her working as a "bar dancer" before marriage has been debunked — she has said she worked as a waitress while studying.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry" data-thread="italy">
+    <span class="node-dot"></span>
+    <div class="wrap">
+      <div class="explainer">
+        <span class="flag">Why "Gandhi" and not "Maino"?</span>
+        <h3 style="font-size:1.15rem;">A name is a convention, not a blood test</h3>
+        <p class="fine" style="margin-top:0.6rem;">Whose surname a child or spouse takes is a social and legal custom, not a biological rule. Rahul's father's family contributed the surname Gandhi; that convention doesn't erase his mother's own family name, Maino, or her identity — it's simply the more common pattern in most (not all) of the world.</p>
+        <div class="contrast">
+          <div>
+            <div class="who"><span class="person" data-init="RaG" style="--p-color:var(--gold-strong)">Rahul Gandhi</span></div>
+            Took his father's surname: Gandhi.
+          </div>
+          <div>
+            <div class="who"><span class="person" data-init="PGV" style="--p-color:var(--ink-soft)">Priyanka Gandhi Vadra</span></div>
+            Rahul's sister kept Gandhi and added her husband <span class="person" data-init="RoV" style="--p-color:var(--ink-soft)">Robert Vadra</span>'s surname when she married — same family, different convention.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry" data-thread="parsi">
+    <span class="node-dot"></span>
+    <div class="wrap">
+      <div class="card secondary">
+        <span class="flag">For completeness — the other branch</span>
+        <p class="role">Indira and Feroze's younger son, <strong><span class="person" data-init="SjG" style="--p-color:var(--ink-soft)">Sanjay Gandhi</span></strong> (1946–1980), married <strong><span class="person" data-init="MnG" style="--p-color:var(--ink-soft)">Maneka Anand</span></strong> (later Maneka Gandhi). Their son is <strong><span class="person" data-init="VaG" style="--p-color:var(--ink-soft)">Varun Gandhi</span></strong> — Rahul's first cousin.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="finale wrap">
+  <span class="eyebrow">Zoom out</span>
+  <h2>One word. Five different families.</h2>
+  <div class="stamp-row">
+    <div class="stamp-item">
+      <div class="stamp stamp-neutral">Mahatma</div>
+      <p>Not this family — no blood relation.</p>
+    </div>
+    <div class="stamp-item">
+      <div class="stamp stamp-neutral">Nehru</div>
+      <p>Indira's birth family, from Allahabad.</p>
+    </div>
+    <div class="stamp-item">
+      <div class="stamp stamp-green">Maino</div>
+      <p>Sonia's birth family, from Italy.</p>
+    </div>
+    <div class="stamp-item">
+      <div class="stamp stamp-green">Ghandy</div>
+      <p>Feroze's documented birth-era spelling, Parsi Bombay.</p>
+    </div>
+    <div class="stamp-item">
+      <div class="stamp" style="--stamp-color:var(--gold-strong);">Gandhi</div>
+      <p>Rahul's inherited surname, through his father Rajiv.</p>
+    </div>
+  </div>
+  <p class="tagline">One surname. A much longer story.</p>
+  <p class="tagline-sub">None of this makes anyone's name less real — it's just where it came from.</p>
+</section>
+
+<footer class="wrap">
+  <h3>Case file sources</h3>
+  <ol>
+    <li><a href="https://en.wikipedia.org/wiki/Feroze_Gandhi" target="_blank" rel="noopener">Wikipedia — Feroze Gandhi</a>: birth name, parents, siblings, marriage, death and burial details.</li>
+    <li><a href="https://m.thewire.in/article/history/feroze-gandhi-the-crusader-who-blazed-a-trail-and-rose-above-a-family-name" target="_blank" rel="noopener">The Wire — "Feroze Gandhi, the Crusader Who Blazed a Trail and Rose Above a Family Name"</a>: biographical background and the Ghandy–Gandhi spelling history.</li>
+    <li><a href="https://enewsinsight.com/fact-check-no-feroze-was-not-khan/" target="_blank" rel="noopener">The News Insight — "Fact Check: No, Feroze was not Khan"</a>: examination and rejection of the "Feroze Khan" / secretly-Muslim claim.</li>
+    <li><a href="https://www.freepressjournal.in/india/is-sonia-gandhis-real-name-antonia-maino-3-facts-and-2-fake-stories-about-interim-congress-president" target="_blank" rel="noopener">Free Press Journal — "Is Sonia Gandhi's real name Antonia Maino? 3 facts and 2 fake stories"</a>: Sonia Gandhi's birth name and debunked rumors about her.</li>
+    <li><a href="https://en.wikipedia.org/wiki/Nehru%E2%80%93Gandhi_family" target="_blank" rel="noopener">Wikipedia — Nehru–Gandhi family</a>: the broader family tree, including the Nehru and Vadra branches.</li>
+  </ol>
+  <p class="note">This page compiles public biographical record for the purpose of surname etymology. It is not intended to question anyone's identity, religion, or legitimacy — surnames change through marriage, migration, and personal choice all the time, and this family is no exception.</p>
+</footer>
+
+<script>
+(function(){
+  document.querySelectorAll('.stamp-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = document.getElementById(btn.dataset.target);
+      if(!target) return;
+      target.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+    });
+  });
+
+  var observeOnce = function(selector, threshold){
+    var els = document.querySelectorAll(selector);
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(items){
+        items.forEach(function(item){
+          if(item.isIntersecting){
+            item.target.classList.add('in-view');
+            io.unobserve(item.target);
+          }
+        });
+      }, { threshold: threshold });
+      els.forEach(function(e){ io.observe(e); });
+    } else {
+      els.forEach(function(e){ e.classList.add('in-view'); });
+    }
+  };
+
+  observeOnce('.entry', 0.15);
+  observeOnce('.finale', 0.2);
+})();
+</script>

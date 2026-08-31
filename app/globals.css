@@ -1,0 +1,513 @@
+:root {
+  --paper: #dee1d9;
+  --paper-raised: #e9ebe4;
+  --ink: #1b2430;
+  --ink-soft: #4a5260;
+  --rule: rgba(27, 36, 48, 0.16);
+  --gold: #93701f;
+  --gold-strong: #7a5a16;
+  --thread-parsi: #23406b;
+  --thread-nehru: #52412f;
+  --thread-italy: #3e6b5c;
+  --thread-italy-soft: rgba(62, 107, 92, 0.1);
+  --stamp-red: #8c2f2f;
+  --stamp-green: #2e5c3e;
+  --stamp-neutral: #3a4a63;
+  --shadow: 0 1px 0 rgba(27, 36, 48, 0.06), 0 8px 20px -12px rgba(27, 36, 48, 0.35);
+  --focus: #93701f;
+}
+
+/* Intentionally staying on the light palette regardless of the visitor's
+   system theme -- per request, this page should never flip to a dark
+   background. (If you ever want dark mode back, restore a
+   `@media (prefers-color-scheme: dark)` block redefining the tokens above.) */
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+h1, h2, h3, .name, .morph, .tagline {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.eyebrow,
+.dates,
+.flag,
+.stamp,
+.stamp-btn,
+.contrast .who,
+footer h3 {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+a { color: var(--thread-parsi); }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ---------- person avatars ---------- */
+.person {
+  position: relative;
+  display: inline-block;
+  margin-right: 0.95em;
+}
+.avatar {
+  /* Shrinking font-size first, then sizing everything else in em against
+     it, is what keeps this badge a small corner accent instead of a
+     text-sized circle -- em units on width/top/etc. resolve against the
+     element's OWN font-size, so this one declaration scales the whole
+     badge (and its offset) together. */
+  font-size: 0.32em;
+  position: absolute;
+  top: -0.55em;
+  right: -1em;
+  width: 1.75em;
+  height: 1.75em;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid var(--p-color, var(--ink-soft));
+  background: var(--paper-raised);
+  box-shadow: var(--shadow);
+  z-index: 3;
+}
+.avatar img,
+.avatar .initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+.avatar .initials {
+  font-size: 1em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--p-color, var(--ink-soft));
+}
+
+/* ---------- hero ---------- */
+.hero {
+  padding: 6rem 0 5rem;
+  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+}
+.hero .eyebrow { margin-bottom: 1.1rem; }
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  line-height: 1.02;
+  font-weight: 700;
+}
+.hero .hindi {
+  display: block;
+  font-weight: 500;
+  font-size: 0.5em;
+  color: var(--ink-soft);
+  margin-top: 0.3em;
+}
+.hero p {
+  max-width: 38rem;
+  font-size: 1.08rem;
+  color: var(--ink-soft);
+  margin-top: 1.6rem;
+}
+.hero .cue {
+  margin-top: 2.6rem;
+  font-size: 0.85rem;
+  color: var(--gold-strong);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  padding: 0.3rem 0;
+  font-family: inherit;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.hero .cue:hover { border-bottom-color: var(--gold-strong); }
+.cue-arrow { display: inline-block; }
+
+.back-to-top {
+  position: fixed;
+  right: 1.4rem;
+  bottom: 1.4rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow);
+  color: var(--gold-strong);
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-to-top:hover { color: var(--ink); }
+
+/* ---------- timeline / spine ---------- */
+main { position: relative; }
+.entry {
+  position: relative;
+  padding: 3.6rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.entry .spine {
+  content: "";
+  position: absolute;
+  left: calc(1.5rem + 1px);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--thread-color, var(--thread-parsi));
+  opacity: 0.55;
+  transform-origin: top;
+}
+@media (min-width: 640px) {
+  .entry .spine { left: 2rem; }
+}
+.entry[data-thread="nehru"] { --thread-color: var(--thread-nehru); }
+.entry[data-thread="italy"] { --thread-color: var(--thread-italy); }
+.entry[data-thread="parsi"] { --thread-color: var(--thread-parsi); }
+.entry[data-thread="news"] { --thread-color: var(--gold-strong); }
+
+.node-dot {
+  position: absolute;
+  left: calc(1.5rem - 5px);
+  top: 3.9rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--thread-color, var(--thread-parsi));
+  box-shadow: 0 0 0 4px var(--paper);
+  display: block;
+}
+@media (min-width: 640px) {
+  .node-dot { left: calc(2rem - 5px); }
+}
+
+.card {
+  margin-left: 2.6rem;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+  padding: 1.6rem 1.7rem;
+  max-width: 640px;
+}
+@media (min-width: 640px) {
+  .card { margin-left: 3.4rem; }
+}
+.card + .card { margin-top: 1rem; }
+.card.secondary {
+  background: transparent;
+  box-shadow: none;
+  border-style: dashed;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.dates {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin-top: 0.15rem;
+}
+.role {
+  color: var(--ink-soft);
+  margin-top: 0.6rem;
+  font-size: 0.98rem;
+}
+.role strong { color: var(--ink); font-weight: 600; }
+
+.flag {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--thread-color, var(--thread-italy));
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* ---------- buttons ---------- */
+.stamp-btn {
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  background: transparent;
+  color: var(--gold-strong);
+  border: 1px solid var(--gold-strong);
+  padding: 0.55rem 1rem;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 1.1rem;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  font-family: inherit;
+}
+.stamp-btn:hover { background: var(--gold-strong); color: var(--paper); transform: translateY(-1px); }
+.stamp-btn:active { transform: translateY(0); }
+
+.reveal-inner { overflow: hidden; }
+.reveal-body {
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--rule);
+  margin-top: 1rem;
+}
+
+.hero-highlight { margin-top: 1.6rem; }
+
+.highlight {
+  background: rgba(122, 90, 22, 0.1);
+  border: 1px solid rgba(122, 90, 22, 0.3);
+  border-left: 3px solid var(--gold-strong);
+  border-radius: 2px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.1rem;
+}
+.highlight-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gold-strong);
+}
+.highlight p {
+  margin: 0.4rem 0 0;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.morph {
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 0.03em;
+  position: relative;
+  display: inline-grid;
+}
+.morph-from, .morph-to {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+}
+.morph-to { color: var(--gold-strong); }
+
+.fine {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  margin-top: 0.7rem;
+}
+
+ul.plain { margin: 0.6rem 0 0; padding-left: 1.1rem; }
+ul.plain li { margin: 0.3rem 0; }
+
+.siblings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  margin-top: 0.8rem;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+.siblings span {
+  border: 1px solid var(--rule);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+
+/* ---------- stamp verdicts ---------- */
+.verdict {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+.stamp {
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  border: 3px solid var(--stamp-color, var(--stamp-red));
+  color: var(--stamp-color, var(--stamp-red));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  position: relative;
+}
+.stamp::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--stamp-color, var(--stamp-red));
+  border-radius: 50%;
+}
+.stamp-green { --stamp-color: var(--stamp-green); }
+.stamp-neutral { --stamp-color: var(--stamp-neutral); }
+.stamp-gold { --stamp-color: var(--gold-strong); }
+
+.verdict-text { flex: 1 1 220px; min-width: 0; }
+.verdict-text .claim { font-style: italic; color: var(--ink-soft); margin: 0 0 0.6rem; }
+
+/* ---------- explainer box ---------- */
+.explainer {
+  background: var(--thread-italy-soft);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 1.5rem 1.6rem;
+  margin-left: 2.6rem;
+  max-width: 640px;
+}
+@media (min-width: 640px) { .explainer { margin-left: 3.4rem; } }
+.contrast {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1.1rem;
+}
+@media (min-width: 520px) { .contrast { grid-template-columns: 1fr 1fr; } }
+.contrast > div {
+  border: 1px dashed var(--rule);
+  padding: 0.9rem 1rem 1rem;
+  border-radius: 2px;
+  font-size: 0.92rem;
+}
+.contrast .who {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+}
+
+/* ---------- news clipping ---------- */
+.clipping {
+  margin-left: 2.6rem;
+  max-width: 640px;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow);
+  padding: 1.7rem 1.8rem;
+  position: relative;
+  transform: rotate(-0.6deg);
+}
+@media (min-width: 640px) { .clipping { margin-left: 3.4rem; } }
+.clipping::before,
+.clipping::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 46px;
+  height: 20px;
+  background: rgba(147, 112, 31, 0.28);
+  border: 1px solid rgba(147, 112, 31, 0.35);
+  transform: rotate(-4deg);
+}
+.clipping::before { left: 28px; }
+.clipping::after { right: 28px; transform: rotate(3deg); }
+.clipping .dig {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 0.5rem 0 1rem;
+  text-wrap: balance;
+}
+.clipping .dig::before,
+.clipping .dig::after { color: var(--gold-strong); }
+.clipping .reaction {
+  border-left: 2px solid var(--rule);
+  padding-left: 0.9rem;
+  margin: 1rem 0;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+}
+.clipping .reaction .hi {
+  display: block;
+  font-style: normal;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+
+/* ---------- finale ---------- */
+.finale { padding: 5rem 0 4rem; text-align: center; }
+.finale h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); }
+.stamp-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.4rem 1.1rem;
+  margin: 2.6rem 0 2rem;
+}
+.stamp-item { width: 150px; }
+.stamp-item .stamp { width: 96px; height: 96px; margin: 0 auto; font-size: 0.66rem; }
+.stamp-item p { font-size: 0.82rem; color: var(--ink-soft); margin: 0.7rem 0 0; }
+.tagline { font-size: clamp(1.3rem, 3.4vw, 1.7rem); margin-top: 1.4rem; }
+.tagline-sub { color: var(--ink-soft); max-width: 34rem; margin: 0.8rem auto 0; font-size: 0.98rem; }
+
+/* ---------- footer ---------- */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 3rem 0 4rem;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+footer h3 {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.9rem;
+}
+footer ol { padding-left: 1.2rem; margin: 0 0 1.6rem; }
+footer li { margin: 0.4rem 0; }
+footer .note { border-top: 1px dashed var(--rule); padding-top: 1.1rem; font-size: 0.84rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
