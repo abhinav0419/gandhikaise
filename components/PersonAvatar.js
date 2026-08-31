@@ -70,13 +70,19 @@ export default function PersonAvatar({ person, as = "span", children }) {
       {children ?? person.name}
       <motion.span className="avatar" variants={avatarVariants} whileHover={{ scale: 1.12, rotate: -5 }}>
         {EXTENSIONS.map((ext) => (
-          <div key={ext} style={{ opacity: loadedExt === ext ? 1 : 0, position: "absolute", inset: 0 }}>
+          // A <span>, not a <div>: this can end up nested inside a <p> (e.g.
+          // "Son of <PersonAvatar/>"), and a <div> is not valid inside <p> --
+          // that mismatch is exactly what breaks hydration on static export.
+          <span
+            key={ext}
+            style={{ opacity: loadedExt === ext ? 1 : 0, position: "absolute", inset: 0 }}
+          >
             <Candidate
               src={`/photos/${person.slug}.${ext}`}
               onSuccess={() => setLoadedExt((prev) => prev ?? ext)}
               onFail={() => setErrorCount((c) => c + 1)}
             />
-          </div>
+          </span>
         ))}
         {failed && <span className="initials">{person.initials}</span>}
       </motion.span>
