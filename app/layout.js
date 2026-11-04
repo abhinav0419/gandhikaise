@@ -20,9 +20,9 @@ const courierPrime = Courier_Prime({
 });
 
 export const metadata = {
-  title: "Gandhi, Kahan Se?",
+  title: "Rahul Gandhi or Gandhy? Surname changed for political gains?",
   description:
-    "An animated, sourced family-tree investigation into where the Gandhi surname actually comes from.",
+    "Rahul Gandh achievement = Sperm won the race \n Modi's achievement = 15 years CM, 15 years PM. Came from nothing, self made."
 };
 
 export default function RootLayout({ children }) {

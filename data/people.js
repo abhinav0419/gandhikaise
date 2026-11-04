@@ -12,7 +12,7 @@
 export const PEOPLE = {
   rahulGandhi: {
     slug: "rahul-gandhi",
-    name: "Rahul Gandhi",
+    name: "Rahul Gandhi ( Should it not be Gandhy?)",
     initials: "RaG",
     color: "var(--gold-strong)",
   },
